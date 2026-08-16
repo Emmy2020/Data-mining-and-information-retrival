@@ -2,7 +2,9 @@
 title: 'Lab: Linear Regression'
 author: "Emmanuel Twagirayezu"
 date: "2026-08-16"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -22,10 +24,7 @@ head (Boston)
 ```{r}
 
 ```
-```{r}
-# Before specifying a dataset 
-lm.fit <- lm(medv ~ lstat)
-```
+
 ```{r}
 # After specify a dataset
 
@@ -200,4 +199,18 @@ contrasts(ShelveLoc)
 
 
 ```
+## Writing Functions
+
+
+```{r}
+LoadLibraries <- function() {
+library ( ISLR2 )
+library (MASS)
+print (" The libraries have been loaded .")
+}
+```
+```{r}
+LoadLibraries ()
+```
+
 

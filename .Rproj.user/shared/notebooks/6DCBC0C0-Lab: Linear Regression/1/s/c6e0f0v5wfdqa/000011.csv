@@ -1,0 +1,4 @@
+"0","lm.fit <- lm(medv ~ lstat, data = Boston)"
+"0","attach(Boston)"
+"0","lm.fit <- lm(medv ~ lstat)"
+"0",""
