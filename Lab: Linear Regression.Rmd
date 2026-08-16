@@ -1,0 +1,203 @@
+---
+title: 'Lab: Linear Regression'
+author: "Emmanuel Twagirayezu"
+date: "2026-08-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# addding libraries by loading the MASS AND ISLR2 Packages
+library(MASS)
+library(ISLR2)
+
+```
+```{r}
+#Showing first  10 rows of Boston dataset retrieved via ISLR2 Package
+head (Boston)
+```
+```{r}
+
+```
+```{r}
+# Before specifying a dataset 
+lm.fit <- lm(medv ~ lstat)
+```
+```{r}
+# After specify a dataset
+
+lm.fit <- lm(medv ~ lstat, data = Boston)
+attach(Boston)
+lm.fit <- lm(medv ~ lstat)
+
+```
+```{r}
+#Display output on model
+lm.fit # Basic information about model output 
+summary(lm.fit) #Summary of the basic information like p-value,....
+```
+
+```{r}
+#Display names of information on model 
+names(lm.fit) #Display names of information on model 
+coef(lm.fit) #extration 
+```
+
+```{r}
+confint(lm.fit) #confidential interval
+```
+
+```{r}
+#Confidential interval and Predict
+predict(lm.fit , data.frame(lstat = (c(5, 10, 15))),
+interval = "confidence")
+#Predict
+
+predict(lm.fit , data.frame(lstat = (c(5, 10, 15))),
+interval = "prediction")
+```
+```{r}
+# Plot median  value (medv) vs percentage of lower-status population (lstat)
+plot(lstat, medv)
+
+# Add the fitted linear regression line to the plot
+abline(lm.fit)
+# Add the regression line with line width 3
+abline(lm.fit, lwd = 3)
+
+# Add the regression line with line width 3 and red color
+abline(lm.fit, lwd = 3, col = "red")
+```
+
+```{r}
+# Create a scatter plot with the points displayed in red
+plot(lstat, medv, col = "red")
+
+# Create a scatter plot using solid circle points (pch = 20)
+plot(lstat, medv, pch = 20)
+
+# Create a scatter plot using "+" symbols for the points
+plot(lstat, medv, pch = "+")
+
+# Display different plotting symbols (pch 1 to 20)
+plot(1:20, 1:20, pch = 1:20)
+```
+```{r}
+# Arrange the plotting area into 2 rows and 2 columns
+par(mfrow = c(2, 2))
+
+# Display the four diagnostic plots for the linear regression model
+plot(lm.fit)
+```
+
+```{r}
+# Plot the predicted values against the model residuals
+plot(predict(lm.fit), residuals(lm.fit))
+
+# Plot the predicted values against the studentized residuals
+plot(predict(lm.fit), rstudent(lm.fit))
+```
+
+```{r}
+# Plot the leverage (hat) values for each observation
+plot(hatvalues(lm.fit))
+
+# Find the observation with the largest leverage value
+which.max(hatvalues(lm.fit))
+```
+
+```{r}
+# Fit a multiple linear regression model using lstat and age to predict medv
+lm.fit <- lm(medv ~ lstat + age, data = Boston)
+
+# Display the summary of the fitted regression model
+summary(lm.fit)
+```
+```{r}
+# Fit a multiple linear regression model using all variables in the Boston dataset
+lm.fit <- lm(medv ~ ., data = Boston)
+
+# Display the summary of the fitted regression model
+summary(lm.fit)
+```
+
+```{r}
+# Load the car package, which provides functions for regression diagnostics
+library(car)
+
+# Calculate the Variance Inflation Factor (VIF) for each predictor
+vif(lm.fit)
+```
+```{r}
+# Fit a multiple linear regression model using all predictors except age
+lm.fit1 <- lm(medv ~ . - age, data = Boston)
+
+# Display the summary of the fitted regression model
+summary(lm.fit1)
+```
+```{r}
+# Update the existing model by removing the age variable
+lm.fit1 <- update(lm.fit, ~ . - age)
+
+# Display the summary of the updated model
+summary(lm.fit1)
+```
+```{r}
+# Fit a regression model including lstat, age, and their interaction
+summary(lm(medv ~ lstat * age, data = Boston))
+```
+```{r}
+# Fit a quadratic regression model using lstat and lstat squared
+lm.fit2 <- lm(medv ~ lstat + I(lstat^2), data = Boston)
+
+# Display the summary of the quadratic regression model
+summary(lm.fit2)
+```
+```{r}
+# Fit the simple linear regression model
+lm.fit <- lm(medv ~ lstat, data = Boston)
+
+# Compare the linear model with the quadratic model using ANOVA
+anova(lm.fit, lm.fit2)
+```
+
+```{r}
+# Arrange the plotting area into 2 rows and 2 columns
+par(mfrow = c(2, 2))
+
+# Generate four diagnostic plots for the quadratic regression model
+plot(lm.fit2)
+```
+```{r}
+# Fit a polynomial regression model of degree 5
+lm.fit5 <- lm(medv ~ poly(lstat, 5), data = Boston)
+
+# Display the summary of the fifth-degree polynomial model
+summary(lm.fit5)
+# Fit a regression model using the logarithm of rm as the predictor
+summary(lm(medv ~ log(rm), data = Boston))
+```
+
+```{r}
+# Display the first six rows of the Carseats dataset
+head(Carseats)# Fit a multiple linear regression model using all predictors
+# and include the interactions between Income and Advertising,
+# and between Price and Age
+lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age,
+             data = Carseats)
+
+# Display the summary of the fitted regression model
+summary(lm.fit)
+
+# Attach the Carseats dataset so its variables can be accessed directly
+attach(Carseats)
+
+# Display the contrast coding used for the categorical variable ShelveLoc
+contrasts(ShelveLoc)
+
+
+```
+
